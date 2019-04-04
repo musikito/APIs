@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+    
+
+    <div style="color:blue;margin-left:30px;" id="div1">First Name
+    
+    </div>
+    <p style="color:red;margin-left:30px;" id="first"></p>
+    <div style="color:blue;margin-left:30px;" id="div2">Last Name</div>
+    <p style="color:red;margin-left:30px;" id="last"></p>
+    <div style="color:blue;margin-left:30px;" id="div3"></div>
+    <p style="color:red;margin-left:30px;" id="dept"></p>
+    <div style="color:blue;margin-left:30px;" id="div4"></div>
+    <p style="color:red;margin-left:30px;" id="salary"></p>
+
+    <script>
+
+        var url = "https://spreadsheets.google.com/feeds/cells/1A0K7F51tOUX2tuJH3Lap5WYJ-Yuilc1uK4qzQOJV4w8/od6/public/basic?alt=json";
+
+
+        $.ajax({
+            url: url,
+            dataType: "jsonp",
+            success: function (data) {
+
+                  // console.log(`First: ${data.feed.entry[4].content.$t}`);
+                // console.log(`Last: ${data.feed.entry[1].content.$t}`);
+                // console.log(`ID: ${data.feed.entry[2].content.$t}`);
+                // console.log(`Salary: ${data.feed.entry[3].content.$t}`);
+
+                document.getElementById('div1').innerHTML = data.feed.entry[0].content.$t;
+                document.getElementById('first').innerHTML = data.feed.entry[4].content.$t;
+                document.getElementById('div2').innerHTML = data.feed.entry[1].content.$t;
+                document.getElementById('last').innerHTML = data.feed.entry[5].content.$t;
+                document.getElementById('div3').innerHTML = data.feed.entry[2].content.$t;
+                document.getElementById('dept').innerHTML = data.feed.entry[6].content.$t;
+                document.getElementById('div4').innerHTML = data.feed.entry[3].content.$t;
+                document.getElementById('salary').innerHTML = data.feed.entry[7].content.$t;
+            },
+        });
+
+    </script>
+</body>
+
+</html>
