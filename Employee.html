@@ -32,12 +32,7 @@
             url: url,
             dataType: "jsonp",
             success: function (data) {
-
-                  // console.log(`First: ${data.feed.entry[4].content.$t}`);
-                // console.log(`Last: ${data.feed.entry[1].content.$t}`);
-                // console.log(`ID: ${data.feed.entry[2].content.$t}`);
-                // console.log(`Salary: ${data.feed.entry[3].content.$t}`);
-
+                
                 document.getElementById('div1').innerHTML = data.feed.entry[0].content.$t;
                 document.getElementById('first').innerHTML = data.feed.entry[4].content.$t;
                 document.getElementById('div2').innerHTML = data.feed.entry[1].content.$t;
