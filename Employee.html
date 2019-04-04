@@ -27,12 +27,11 @@
 
         var url = "https://spreadsheets.google.com/feeds/cells/1A0K7F51tOUX2tuJH3Lap5WYJ-Yuilc1uK4qzQOJV4w8/od6/public/basic?alt=json";
 
-
         $.ajax({
             url: url,
             dataType: "jsonp",
             success: function (data) {
-                
+
                 document.getElementById('div1').innerHTML = data.feed.entry[0].content.$t;
                 document.getElementById('first').innerHTML = data.feed.entry[4].content.$t;
                 document.getElementById('div2').innerHTML = data.feed.entry[1].content.$t;
