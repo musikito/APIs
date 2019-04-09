@@ -71,19 +71,65 @@ function getNewToken(oAuth2Client, callback) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
+
+/**
+ * 
+ * @param {row[0]} empName is the row [0] from the sheet, it will be use also for name the newly created HTML file
+ * @param {row [1]} empLastName use to write the las name
+ * you also want to pass more info to this function to populate your file
+ */
+function buildPage(empName,empLastName) {
+  // concatenate body string
+  var body = '<h1>Employee Report</h1>\n'+
+                '<p>'+empName+'</p>\n'+
+                '<p>'+empLastName+'</p>';
+
+  // concatenate header string
+  var head = '<link rel="stylesheet" href="styles.css"></link>';
+  
+ //return the whole file to be created
+ //also note that you can have all the tags and elemnts for a norma HTML file
+  return '<!DOCTYPE html>'
+       + '<html><head>' + '<title>Document</title>'+ '<link rel="stylesheet" href="style.css"></link>'+'</head><body>' + body + '</body></html>';
+};//end of function buildPage
+
+/**
+ * 
+ * @param {auth token to acces the sheets API} auth 
+ */
 function ListEmp(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
-    spreadsheetId: '1A0K7F51tOUX2tuJH3Lap5WYJ-Yuilc1uK4qzQOJV4w8',// add your own Sheet ID
-    range: 'Salary!A2:D',
+    spreadsheetId: 'PUT-YOUR-SHEET-ID-HERE',// add your own Sheet ID
+    range: 'Salary!A2:E', //range of cells that you want ot access
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
     if (rows.length) {
-      console.log('Name,        Salary,     Department');
+
+      //document.getElementById("First_Name").innerHTML = "new text";
+     // console.log('Name,        Salary,     Department');
       // Print columns A and E, which correspond to indices 0 and 4.
+      //let head = '<!DOCTYPE html>\n' +  
+      //'<html lang="en">\n' + 
+      //'<head>';
       rows.map((row) => {
-        console.log(`${row[0]}, ${row[2]}, ${row[3]}`);
+        //tried to use appednfile, is not efective
+       // fs.appendFile(row[0]+row[4]+".html",head+'test',function(err){
+         // if(err) throw err;
+         // console.log("created");
+        //})
+          
+        //create the file with the first name+ID and add the html extension
+        //use fs.createWriteStream for a more controlled wirting
+        var create = fs.createWriteStream(row[0]+row[4]+".html");
+          create.once('open',function(fd){
+            //call our function to create the file and pass the variables that we want
+            //to use on the body
+            var html = buildPage(row[0],row[1]);
+            create.end(html);
+         })
+            //console.log(`${row[0]}, ${row[2]}, ${row[3]}`);
       });
     } else {
       console.log('No data found.');

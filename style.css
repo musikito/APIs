@@ -1,0 +1,13 @@
+body {
+    background-color: powderblue;
+  }
+  h1 {
+    color: blue;
+   font-family: verdana;
+   margin-left:30px;
+  }
+  p {
+    color: red;
+    margin-left:30px;
+    font-family: courier;
+  }
